@@ -1,0 +1,57 @@
+.big-button {
+    background: $purple;
+    border: none;
+    border-bottom: .6rem solid darken($purple, 10%);
+    color: white;
+    font-weight: bold;
+    font-size: 3.6rem;
+    width: 100%;
+    margin-bottom: 4.8rem;
+    padding: 2.4rem;
+}
+
+.big-button:disabled {
+    opacity: .5;
+}
+
+.big-button:active {
+    margin-top: 0.6rem;
+    border: none;
+}
+
+.button {
+    color: white;
+    background-color: $purple;
+    border: none;
+    border-bottom: .3rem solid darken($purple, 10%);
+    font-weight: 500;
+    padding: 1.2rem;
+}
+
+.button:disabled {
+    opacity: .5;
+}
+
+.button--link {
+    background: none;
+    border: none;
+    color: $off-white;
+    padding: 0;
+}
+
+.button--link:hover {
+    color: lighten($purple, 30%);
+}
+
+.button--link:disabled:hover {
+    color: $off-white;
+}
+
+.button--animate:active {
+    border: none;
+    margin-top: .3rem;
+}
+
+.delete-button {
+    margin-left: 1rem;
+}

@@ -1,52 +1,64 @@
-const useState = React.useState;
+import React, { useState, useEffect } from 'react'
+import Action from './components/Action'
+import Options from './components/Options'
+import AddOption from './components/AddOption'
+import Header from './components/Header'
+import OptionModal from './components/OptionModal'
 
-function App() {
-    const [inputText, setInputText] = useState('');
+export default function App() {
+    const [options, setOptions] = useState(() => {
+        try { return JSON.parse(localStorage.getItem('options')) || []}
+        catch (e) {return []}
+    });
 
-    const app = {
-        title: 'Just do it',
-        subtitle: 'We help you with your decisions'
+    const [option, setOption] = useState('');
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const title = 'Just do it';
+    const subtitle = 'We help you with your decisions';
+
+    function clearListHandler() {
+        setOptions([]);
+    }
+
+    function addOptionHandler(option) {
+        if(options.includes(option))
+            return `"${option}" is already in the options.`
+
+        setOptions([...options, option]);
     }
     
-    const [options, setOptions] = useState([]);
+    function deleteOptionHandler(optionIndex){
+        setOptions(options.filter((x, i) => i != optionIndex));
+    }
+    
+    function selectOptionHandler(x) {
+        setOption(x);
+        setModalOpen(true);
+    }
 
-    function submitHandler(e) {
-        e.preventDefault();
-        
-        if(inputText.trim()) {
-            setOptions([...options, inputText.trim()]); 
-            setInputText('');
-        }
+    function clearOptionHandler() {
+        setModalOpen(false);
+        setTimeout(() => setOption(''), 200);
     }
-    
-    function deleteItem(element){
-        setOptions(options.filter((x, i) => i != element));
-    }
-    
-    function whatToDo() {
-        if(options.length > 0)
-            alert(options[Math.floor(Math.random()*options.length)]);
-    }
+
+    useEffect(() => {
+        localStorage.setItem('options', JSON.stringify(options))
+        console.log('options saved')            
+
+    }, [options.length])
 
     return (
-        <div>
-            <h1>{app.title}</h1>
-    
-            <p>{app.subtitle}</p>
-    
-            <button disabled={options.length == 0} onClick={whatToDo}>What should I do?</button>
-            <button disabled={options.length == 0} onClick={() => setOptions([])}>Clear list</button>
-            
-            {options.length > 0 && <p>Here are your options:</p>}
-            <ul>
-                {options.map((x, index) => <li key={index}>{x} <span style={{cursor: 'pointer'}} onClick={() => deleteItem(index)}>X</span></li>)}
-            </ul>
-            <form onSubmit={submitHandler}>
-                <input type='text' name='option' onChange={e => setInputText(e.target.value)} value={inputText}/>
-                <button disabled={inputText.trim().length == 0}>Add Option</button>
-            </form>
-        </div>    
+        <>
+            <Header title={title} subtitle={subtitle}/>
+            <div className='container'>
+                <Action options={options} selectOptionHandler={selectOptionHandler}/>
+                <div className="widget">
+                    <Options options={options} clearListHandler={clearListHandler} deleteOptionHandler={deleteOptionHandler}/>
+                    <AddOption addOptionHandler={addOptionHandler} options={options}/>
+                </div>
+                <OptionModal option={option} open={modalOpen} clearOptionHandler={clearOptionHandler}></OptionModal>
+            </div>
+        </>    
     )
 }
-
-ReactDOM.render(<App />, document.querySelector('#app'));
