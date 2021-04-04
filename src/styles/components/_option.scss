@@ -11,3 +11,13 @@
     margin: 0;
     word-break: break-all;
 }
+
+@media(max-width: $mobile-breakpoint) {
+    .option {
+        padding: 0.8rem 1.6rem;
+    }
+
+    .option__text {
+        font-size: 1.6rem;
+    }
+}

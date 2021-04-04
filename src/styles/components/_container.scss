@@ -3,3 +3,9 @@
     padding: 0 5rem;
     margin: 0 auto;
 }
+
+@media(max-width: $mobile-breakpoint) {
+    .container {
+        padding: 0 1.6rem;
+    }
+}
