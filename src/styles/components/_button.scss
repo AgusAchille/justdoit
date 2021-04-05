@@ -15,7 +15,7 @@
 }
 
 .big-button:active {
-    margin-top: 0.6rem;
+    margin-top: 4.8rem + 0.6rem;
     border: none;
 }
 
@@ -61,5 +61,10 @@
         margin: 1.6rem 0;
         font-size: 2.8rem;
         padding: 1.6rem 2.4rem;
+    }
+
+    .big-button:active {
+        margin-top: 1.6rem + 0.6rem;
+        border: none;
     }
 }
