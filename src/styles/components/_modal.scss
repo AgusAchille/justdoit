@@ -21,11 +21,20 @@
     padding: 3.2rem;
     text-align: center;
     border: .5rem solid $purple;
-    word-break: break-all;
+    word-break: normal;
 
     h1 {
         font-size: 4.8rem;
         margin-top: 0;
         color: white
+    }
+}
+
+
+@media (max-width: $mobile-breakpoint) {
+    .modal {
+        h1 {
+            font-size: 3.6rem;
+        }
     }
 }
